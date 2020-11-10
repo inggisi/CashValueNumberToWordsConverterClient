@@ -5,9 +5,18 @@ namespace GrpcClient
 {
     public class CashValueConverterGrpcClient
     {
+
+        private readonly string _serverAddress;
+
+        public CashValueConverterGrpcClient(string serverAddress)
+        {
+            _serverAddress = serverAddress;
+        }
+
+
         public ConversionResult Convert(double number) 
         {
-            using var channel = GrpcChannel.ForAddress("https://localhost:5001");
+            using var channel = GrpcChannel.ForAddress(_serverAddress);
             try
             {
                 var client = new NumberToWordConverter.NumberToWordConverterClient(channel);

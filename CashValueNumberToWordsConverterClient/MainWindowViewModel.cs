@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Navigation;
+using CashValueNumberToWordsConverterClient.Properties;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
@@ -16,7 +17,8 @@ namespace CashValueNumberToWordsConverterClient
 
         public MainWindowViewModel()
         {
-            _converterGrpcClient = new CashValueConverterGrpcClient();
+             var serverAddress = Properties.Settings.Default.ServerAddress;
+            _converterGrpcClient = new CashValueConverterGrpcClient(serverAddress);
         }
 
         private double _cashValueAsNumber;
