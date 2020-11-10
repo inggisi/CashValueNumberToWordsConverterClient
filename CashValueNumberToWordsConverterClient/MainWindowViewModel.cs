@@ -35,12 +35,28 @@ namespace CashValueNumberToWordsConverterClient
             set { _cashValueAsWords = value; RaisePropertyChanged(); }
         }
 
+        private string _status;
+        public string Status
+        {
+            get { return _status; }
+            set { _status = value; RaisePropertyChanged(); }
+        }
+
+
         private RelayCommand _convertCashValue;
         public RelayCommand ConvertCashValue => _convertCashValue ?? (_convertCashValue = new RelayCommand(() =>
         {
-            var result = _converterGrpcClient.Convert(CashValueAsNumber);
-            CashValueAsWords = result.NumberAsWord;
 
+            Status = string.Empty;
+            var result = _converterGrpcClient.Convert(CashValueAsNumber);
+
+            if (result.HasError)
+            {
+                Status = result.ErrorMessage;
+                
+            }
+
+            CashValueAsWords = result.NumberAsWord;
         }));
 
     }

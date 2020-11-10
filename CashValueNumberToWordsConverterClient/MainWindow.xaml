@@ -5,21 +5,50 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CashValueNumberToWordsConverterClient"
         mc:Ignorable="d"
-        Title="Cash Value NumberToWords Converter" Height="200" Width="600"
+        Title="Cash Value NumberToWords Converter" Width="600"
         DataContext="{Binding MainWindowViewModel, Source={StaticResource Locator}}">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ControlTemplate x:Key="InputValueErrorTemplate">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Foreground="Red" VerticalAlignment="Center" FontWeight="Bold" Text="!" Margin="0,0,5,0"/>
+                        <AdornedElementPlaceholder x:Name="Holder"/>
+                    </StackPanel>
+                    <TextBlock MaxWidth="300" Foreground="Red" Text="{Binding ElementName=Holder,Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" TextWrapping="Wrap"/>
+                </StackPanel>
+            </ControlTemplate>
+        </ResourceDictionary>
+    </Window.Resources>
 
-    <StackPanel>
-        <StackPanel Orientation="Horizontal" Margin="10,20,10,10">
-            <Label Content="Cash value as number:"></Label>
-            <TextBox Text="{Binding CashValueAsNumber,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalContentAlignment="Center"></TextBox>
-            <Label Content="$"></Label>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top">
+            <StackPanel Orientation="Horizontal" Margin="10,20,10,10">
+                <Label Content="Cash value as number:"></Label>
+                <TextBox Margin="10,0,0,0" Validation.ErrorTemplate="{StaticResource InputValueErrorTemplate}" MinWidth="100" VerticalContentAlignment="Center">
+                    <TextBox.Text>
+                        <Binding Path="CashValueAsNumber" UpdateSourceTrigger="LostFocus">
+                            <Binding.ValidationRules>
+                                <local:InputNumberValidationRule Min="0" Max="999999999.99"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <Label Content="$"></Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <Button Content="Convert" Padding="5" Command="{Binding ConvertCashValue,IsAsync=True}"></Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10,20,10,10">
+                <Label Content="Cash value as words:"></Label>
+                <TextBlock Text="{Binding CashValueAsWords}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            </StackPanel>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Margin="10">
-            <Button Content="Convert" Padding="5" Command="{Binding ConvertCashValue}"></Button>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" Margin="10,20,10,10">
-            <Label Content="Cash value as words:"></Label>
-            <TextBlock Text="{Binding CashValueAsWords}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-        </StackPanel>
-    </StackPanel>
+        <StatusBar>
+            <StatusBarItem>
+                <TextBlock Text="{Binding Status,UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap"></TextBlock>
+            </StatusBarItem>
+        </StatusBar>
+    </DockPanel>
+
 </Window>
