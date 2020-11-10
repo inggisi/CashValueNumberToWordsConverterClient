@@ -1,0 +1,25 @@
+﻿<Window x:Class="CashValueNumberToWordsConverterClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CashValueNumberToWordsConverterClient"
+        mc:Ignorable="d"
+        Title="Cash Value NumberToWords Converter" Height="200" Width="600"
+        DataContext="{Binding MainWindowViewModel, Source={StaticResource Locator}}">
+
+    <StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="10,20,10,10">
+            <Label Content="Cash value as number:"></Label>
+            <TextBox Text="{Binding CashValueAsNumber,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalContentAlignment="Center"></TextBox>
+            <Label Content="$"></Label>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="10">
+            <Button Content="Convert" Padding="5" Command="{Binding ConvertCashValue}"></Button>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="10,20,10,10">
+            <Label Content="Cash value as words:"></Label>
+            <TextBlock Text="{Binding CashValueAsWords}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        </StackPanel>
+    </StackPanel>
+</Window>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashValueNumberToWordsConverterClient", "CashValueNumberToWordsConverterClient\CashValueNumberToWordsConverterClient.csproj", "{DE9D9C58-6107-405A-B752-88727B8079CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrpcClient", "GrpcClient\GrpcClient.csproj", "{417408DC-90A6-4F2F-8476-B8AC6FBA3FC5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DE9D9C58-6107-405A-B752-88727B8079CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE9D9C58-6107-405A-B752-88727B8079CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE9D9C58-6107-405A-B752-88727B8079CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE9D9C58-6107-405A-B752-88727B8079CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{417408DC-90A6-4F2F-8476-B8AC6FBA3FC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{417408DC-90A6-4F2F-8476-B8AC6FBA3FC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{417408DC-90A6-4F2F-8476-B8AC6FBA3FC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{417408DC-90A6-4F2F-8476-B8AC6FBA3FC5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {67F6821D-1A53-44CA-A05E-3FC2A24DDF3A}
+	EndGlobalSection
+EndGlobal
