@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Navigation;
 using CashValueNumberToWordsConverterClient.Properties;
 using GalaSoft.MvvmLight;
@@ -13,19 +17,34 @@ namespace CashValueNumberToWordsConverterClient
     public class MainWindowViewModel : ViewModelBase
     {
         CashValueConverterGrpcClient _converterGrpcClient;
-        
+        public ICommandAsync ConvertCashValue { get; }
 
         public MainWindowViewModel()
         {
-             var serverAddress = Properties.Settings.Default.ServerAddress;
+            var serverAddress = Properties.Settings.Default.ServerAddress;
             _converterGrpcClient = new CashValueConverterGrpcClient(serverAddress);
+            ConvertCashValue = new RelayCommandAsync(Convert, CanConvert, HandleError);
+        }
+
+
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            private set { _isBusy = value; RaisePropertyChanged(); }
         }
 
         private double _cashValueAsNumber;
         public double CashValueAsNumber
         {
             get { return _cashValueAsNumber; }
-            set { _cashValueAsNumber = value; RaisePropertyChanged(); }
+            set
+            {
+                _cashValueAsNumber = value;
+                CashValueAsWords = "";
+                Status = "";
+                RaisePropertyChanged();
+            }
         }
 
         private string _cashValueAsWords;
@@ -42,22 +61,35 @@ namespace CashValueNumberToWordsConverterClient
             set { _status = value; RaisePropertyChanged(); }
         }
 
-
-        private RelayCommand _convertCashValue;
-        public RelayCommand ConvertCashValue => _convertCashValue ?? (_convertCashValue = new RelayCommand(() =>
+        private async Task Convert()
         {
-
-            Status = string.Empty;
-            var result = _converterGrpcClient.Convert(CashValueAsNumber);
-
-            if (result.HasError)
+            Status = "Conversion is running... Please wait!";
+            IsBusy = true;
+            try
             {
-                Status = result.ErrorMessage;
-                
-            }
+                var result = await _converterGrpcClient.Convert(CashValueAsNumber);
 
-            CashValueAsWords = result.NumberAsWord;
-        }));
+                if (result.HasError)
+                {
+                    Status = result.ErrorMessage;
+
+                }
+
+                CashValueAsWords = result.NumberAsWord;
+                Status = "Conversion was finished...";
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        private bool CanConvert() => !IsBusy;
+
+        private void HandleError(Exception ex)
+        {
+            Status = ex.Message;
+        }
 
     }
 }

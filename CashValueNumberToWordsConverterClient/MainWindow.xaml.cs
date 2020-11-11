@@ -25,8 +25,6 @@ namespace CashValueNumberToWordsConverterClient
         public MainWindow()
         {
             InitializeComponent();
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("de-DE");
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("de-DE");
             this.SizeToContent = SizeToContent.Height;
         }
     }

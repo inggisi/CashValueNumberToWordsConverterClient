@@ -9,6 +9,7 @@
         DataContext="{Binding MainWindowViewModel, Source={StaticResource Locator}}">
     <Window.Resources>
         <ResourceDictionary>
+            <local:NotOrConverter x:Key="booleanNotOrConverter" />
             <ControlTemplate x:Key="InputValueErrorTemplate">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
@@ -25,19 +26,27 @@
         <StackPanel DockPanel.Dock="Top">
             <StackPanel Orientation="Horizontal" Margin="10,20,10,10">
                 <Label Content="Cash value as number:"></Label>
-                <TextBox Margin="10,0,0,0" Validation.ErrorTemplate="{StaticResource InputValueErrorTemplate}" MinWidth="100" VerticalContentAlignment="Center">
+                <TextBox x:Name="txtInputBox" Margin="10,0,0,0" Validation.ErrorTemplate="{StaticResource InputValueErrorTemplate}" MinWidth="100" VerticalContentAlignment="Center">
                     <TextBox.Text>
-                        <Binding Path="CashValueAsNumber" UpdateSourceTrigger="LostFocus">
+                        <Binding Path="CashValueAsNumber" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" ConverterCulture='de-DE' StringFormat="N2">
                             <Binding.ValidationRules>
                                 <local:InputNumberValidationRule Min="0" Max="999999999.99"/>
                             </Binding.ValidationRules>
                         </Binding>
+                        
                     </TextBox.Text>
                 </TextBox>
                 <Label Content="$"></Label>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="10">
-                <Button Content="Convert" Padding="5" Command="{Binding ConvertCashValue,IsAsync=True}"></Button>
+                <Button Content="Convert" Padding="5" Command="{Binding ConvertCashValue}">
+                    <Button.IsEnabled>
+                        <MultiBinding Converter="{StaticResource booleanNotOrConverter}">
+                            <Binding ElementName="txtInputBox" Path="(Validation.HasError)" UpdateSourceTrigger="PropertyChanged" />
+                            <Binding Path="IsBusy" UpdateSourceTrigger="PropertyChanged"/>
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                </Button>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="10,20,10,10">
                 <Label Content="Cash value as words:"></Label>

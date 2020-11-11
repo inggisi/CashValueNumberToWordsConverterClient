@@ -1,5 +1,6 @@
 ﻿using Grpc.Net.Client;
 using System;
+using System.Threading.Tasks;
 
 namespace GrpcClient
 {
@@ -14,13 +15,13 @@ namespace GrpcClient
         }
 
 
-        public ConversionResult Convert(double number) 
+        public async Task<ConversionResult> Convert(double number) 
         {
             using var channel = GrpcChannel.ForAddress(_serverAddress);
             try
             {
                 var client = new NumberToWordConverter.NumberToWordConverterClient(channel);
-                var reply = client.Convert(new NumberToWordConversionRequest() { NumberToConvert = number });
+                var reply = await client.ConvertAsync(new NumberToWordConversionRequest() { NumberToConvert = number });
                 return new ConversionResult()
                 {
                     NumberAsWord = reply.ConvertedNumber,
