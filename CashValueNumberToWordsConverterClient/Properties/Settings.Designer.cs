@@ -25,7 +25,7 @@ namespace CashValueNumberToWordsConverterClient.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://localhost:5001")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://localhost:5002")]
         public string ServerAddress {
             get {
                 return ((string)(this["ServerAddress"]));

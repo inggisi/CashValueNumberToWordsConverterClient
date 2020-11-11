@@ -12,9 +12,11 @@ namespace CashValueNumberToWordsConverterGrpcServiceAdapter
         public string ServerAddress { get; set; }
         public async Task<ConversionResult> Convert(double number)
         {
-            using var channel = GrpcChannel.ForAddress(ServerAddress);
+            GrpcChannel channel = null;
+
             try
             {
+                channel = CreateChannel(ServerAddress);
                 var client = new NumberToWordConverter.NumberToWordConverterClient(channel);
                 var reply = await client.ConvertAsync(new NumberToWordConversionRequest() { NumberToConvert = number });
                 return new ConversionResult()
@@ -31,6 +33,33 @@ namespace CashValueNumberToWordsConverterGrpcServiceAdapter
                     ErrorMessage = ex.Message,
                     HasError = true
                 };
+            }
+            finally
+            {
+                if (channel != null)
+                {
+                    channel.Dispose();
+                }
+            }
+        }
+
+        private GrpcChannel CreateChannel(string serverAddress)
+        {
+            GrpcChannel channel;
+
+            if (string.IsNullOrEmpty(serverAddress))
+            {
+                throw new Exception($"Error while creating GrpcChannel. Server address is empty. Please insert a valid address into the application settings!");
+            }
+
+            try
+            {
+                channel = GrpcChannel.ForAddress(ServerAddress);
+                return channel;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error while creating GrpcChannel for serveraddress {serverAddress}!", ex);
             }
         }
     }

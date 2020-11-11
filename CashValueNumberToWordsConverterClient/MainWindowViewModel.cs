@@ -69,14 +69,13 @@ namespace CashValueNumberToWordsConverterClient
             {
                 var result = await _converterServiceAdapter.Convert(CashValueAsNumber);
 
+                CashValueAsWords = result.NumberAsWord;
+                Status = "Conversion was finished...";
+                
                 if (result.HasError)
                 {
                     Status = result.ErrorMessage;
-
                 }
-
-                CashValueAsWords = result.NumberAsWord;
-                Status = "Conversion was finished...";
             }
             finally
             {
