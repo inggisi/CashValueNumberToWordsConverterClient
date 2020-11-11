@@ -50,7 +50,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="10,20,10,10">
                 <Label Content="Cash value as words:"></Label>
-                <TextBlock Text="{Binding CashValueAsWords}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Text="{Binding CashValueAsWords}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" MaxWidth="300"></TextBlock>
             </StackPanel>
         </StackPanel>
         <StatusBar>
