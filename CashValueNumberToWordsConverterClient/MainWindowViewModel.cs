@@ -10,19 +10,19 @@ using CashValueNumberToWordsConverterClient.Properties;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
-using GrpcClient;
+using CashValueNumberToWordsConverterServiceAdapter;
 
 namespace CashValueNumberToWordsConverterClient
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        CashValueConverterGrpcClient _converterGrpcClient;
+        ICashValueNumberToWordsConverterServiceAdapter _converterServiceAdapter;
         public ICommandAsync ConvertCashValue { get; }
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(ICashValueNumberToWordsConverterServiceAdapter converterServiceAdapter)
         {
-            var serverAddress = Properties.Settings.Default.ServerAddress;
-            _converterGrpcClient = new CashValueConverterGrpcClient(serverAddress);
+            _converterServiceAdapter = converterServiceAdapter;
+            _converterServiceAdapter.ServerAddress = Properties.Settings.Default.ServerAddress;
             ConvertCashValue = new RelayCommandAsync(Convert, CanConvert, HandleError);
         }
 
@@ -67,7 +67,7 @@ namespace CashValueNumberToWordsConverterClient
             IsBusy = true;
             try
             {
-                var result = await _converterGrpcClient.Convert(CashValueAsNumber);
+                var result = await _converterServiceAdapter.Convert(CashValueAsNumber);
 
                 if (result.HasError)
                 {

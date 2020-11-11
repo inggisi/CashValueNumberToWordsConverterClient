@@ -11,7 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GrpcClient\GrpcClient.csproj" />
+    <ProjectReference Include="..\CashValueNumberToWordsConverterGrpcServiceAdapter\CashValueNumberToWordsConverterGrpcServiceAdapter.csproj" />
+    <ProjectReference Include="..\CashValueNumberToWordsConverterServiceAdapter\CashValueNumberToWordsConverterServiceAdapter.csproj" />
   </ItemGroup>
 
   <ItemGroup>
