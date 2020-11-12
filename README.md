@@ -6,8 +6,9 @@ the communication with the server is based on GRPC.
 
 ## Run the client under Windows
 
-- clone the master branch and open with Visual Studio or other appropriated IDE
-- build the solution and start debugging or navigate to your solution folder and then into the project folder *CashValueNumberToWordsConverterClient*
-- from there into \bin\[Debug|Release]\netcoreapp3.1 and start the *CashValueNumberToWordsConverterClient* application
+- clone the master branch, the branch contains an already build version
+- after cloning the application can be found under:
+- [local project path]\CashValueNumberToWordsConverterClient\CashValueNumberToWordsConverterClient\bin\Release\netcoreapp3.1
+- start the *CashValueNumberToWordsConverterClient* app
 - in the *CashValueNumberToWordsConverterClient.dll.config* it is possible to manipulate the server address, it is set to https://localhost:5001 by default
 - make sure, that the service [CashValueNumberToWordsConverterService](https://github.com/inggisi/CashValueNumberToWordsConverterService) runs with this address
