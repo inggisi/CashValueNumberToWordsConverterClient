@@ -1,7 +1,7 @@
 # CashValueNumberToWordsConverterClient
 
 ## Description
-The CashValueNumberToWordsConverterClient is a WPF GUI, which accepts dollar curreny value inputs and requests a service to convert the number into number words,
+The CashValueNumberToWordsConverterClient is a WPF GUI, which accepts dollar currency value inputs and requests a service to convert the number into number words,
 the communication with the server is based on GRPC.
 
 ## Run the client under Windows
